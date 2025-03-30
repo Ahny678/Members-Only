@@ -6,13 +6,29 @@
     <title>Signup</title>
   </head>
   <body>
-    <form method="POST" action="">
+    <%- include("partials/errors.ejs") %>
+    <form method="POST" action="/users/signup">
+      <label for="firstName">First Name:</label>
+      <input type="text" name="firstName" />
+
+      <label for="lastName">Last Nmae:</label>
+      <input type="text" name="lastName" />
+
       <label for="username">Username</label>
       <input type="text" name="username" />
+
+      <label for="email">Email</label>
+      <input type="text" name="email" />
+
       <label for="password">Password</label>
       <input type="password" name="password" />
+
       <label for="confirm-password">Confrim Password</label>
       <input type="password" name="confirm-password" />
+
+      <label for="adminCode">Admin Code</label>
+      <input type="text" name="adminCode" />
+
       <button type="submit">Signup</button>
     </form>
   </body>

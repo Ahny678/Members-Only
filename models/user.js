@@ -47,12 +47,12 @@ User.init(
     },
     membershipStatus: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: false,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      default: false,
     },
   },
   {
