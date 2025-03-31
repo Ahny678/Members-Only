@@ -31,6 +31,21 @@ exports.postNewMessagePage = async (req, res) => {
   }
 };
 
+exports.deleteMessage = async (req, res) => {
+  try {
+    await Message.destroy({
+      where: {
+        id: req.params.messageId,
+      },
+    });
+    res.status(204);
+    res.redirect("/messages/all");
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
 exports.Auther = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
