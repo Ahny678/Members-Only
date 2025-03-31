@@ -13,16 +13,9 @@ router.post(
 );
 router.get("/signup", userController.getSignupPage);
 router.post("/signup", userController.postSignupPage);
-router.get("/join", userController.getJoinPage);
+router.get("/join", userController.Auther, userController.getJoinPage);
 router.post("/join", userController.postJoinPage);
 router.patch("/:userId", userController.updateUser);
 
-router.get("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.send("You have been logged out");
-  });
-});
+router.get("/logout", userController.Logout);
 module.exports = router;

@@ -55,12 +55,12 @@ require("./config/passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  console.log("CURRENT USER:", req.user);
-  //console.log("Session ID from cookie:", req.sessionID);
-  console.log("Session object:", req.session);
-  next();
-});
+// app.use((req, res, next) => {
+//  // console.log("CURRENT USER:", req.user);
+//   //console.log("Session ID from cookie:", req.sessionID);
+//   //console.log("Session object:", req.session);
+//   next();
+// });
 
 //----------------------------------------------------
 

@@ -28,7 +28,14 @@ exports.getLoginPage = (req, res) => {
   res.render("login");
 };
 
-//exports.postLoginPage = (req, res) => {};
+exports.Logout = (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.send("You have been logged out");
+  });
+};
 
 exports.getSignupPage = (req, res) => {
   res.render("signup");
@@ -75,10 +82,37 @@ exports.postSignupPage = [
   },
 ];
 
-exports.getLogoutPage = (req, res, next) => {};
+exports.getJoinPage = (req, res, next) => {
+  res.render("joinClub");
+};
 
-exports.getJoinPage = (req, res, next) => {};
+exports.postJoinPage = async (req, res, next) => {
+  try {
+    const passcode = req.body.passcode;
 
-exports.postJoinPage = (req, res, next) => {};
+    if (passcode === process.env.MEMBER_CODE) {
+      req.user.membershipStatus = true;
+      await req.user.save();
+      res.status(200);
+      res.redirect("/");
+    } else {
+      res.status(401).json({ message: "Wrong passcode!" });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
 
 exports.updateUser = (req, res, next) => {};
+
+exports.Auther = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res
+      .status(401)
+      .json({ message: "You are not authorized to view this page" });
+  }
+};

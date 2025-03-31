@@ -6,9 +6,12 @@
     <title>New Message</title>
   </head>
   <body>
-    <form method="POST" action="">
+    <form method="POST" action="/messages/new">
+      <label for="title">Enter title</label>
+      <input type="text" name="title" />
       <label for="message">Enter message</label>
       <input type="text" name="message" />
+      <button type="submit">Post</button>
     </form>
   </body>
 </html>

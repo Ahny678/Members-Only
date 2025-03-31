@@ -34,13 +34,16 @@ Message.init(
 );
 
 //one to many -> user -- messages
-User.hasMany(Message, {
+Message.belongsTo(User, {
   foreignKey: {
-    type: DataTypes.UUID,
+    name: "userId",
     allowNull: false,
+    type: DataTypes.UUID,
   },
 });
 
-Message.belongsTo(User);
+User.hasMany(Message, {
+  foreignKey: "userId", // This must match exactly
+});
 
-module.exports = User;
+module.exports = Message;
