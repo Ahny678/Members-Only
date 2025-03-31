@@ -6,12 +6,29 @@
     <title>Messages</title>
   </head>
   <body>
-    <!-- display messages -->
-    <!-- normal people only see messages -->
-    <!-- members can see names and timestamps -->
-    <!-- admin delete messages button -->
-    <!-- post new message -->
-    <!-- join the club button -->
-    <!-- logout -->
+    <h1>Messages</h1>
+
+    <div id="message-container">
+      <% messages.forEach(function(message) { %>
+      <div class="message">
+        <h3><%= message.title %></h3>
+        <p><%= message.text %></p>
+
+        <!-- Only members can see username and timestamp -->
+        <% if (user.membershipStatus) { %>
+        <p><strong>Posted by:</strong> <%= message.User.username %></p>
+        <p><em>Posted on:</em> <%= message.createdAt.toDateString() %></p>
+        <% } %>
+
+        <!-- Only admins can see delete button -->
+        <% if (user.isAdmin) { %>
+        <form action="/messages/<%= message.id %>/delete" method="POST">
+          <button type="submit">Delete Message</button>
+        </form>
+        <% } %>
+      </div>
+      <hr />
+      <% }); %>
+    </div>
   </body>
 </html>

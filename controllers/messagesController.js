@@ -1,6 +1,15 @@
 const Message = require("../models/message");
-exports.getAllMessages = (req, res) => {
-  res.render("messages");
+const User = require("../models/user");
+exports.getAllMessages = async (req, res) => {
+  const messages = await Message.findAll({
+    include: [
+      {
+        model: User, // Join with the User model
+        attributes: ["username"], // Fetch only the username field
+      },
+    ],
+  });
+  res.render("messages", { messages: messages, user: req.user });
 };
 
 exports.getNewMessagePage = (req, res) => {
