@@ -28,7 +28,7 @@ exports.getLoginPage = (req, res) => {
   res.render("login");
 };
 
-exports.postLoginPage = (req, res) => {};
+//exports.postLoginPage = (req, res) => {};
 
 exports.getSignupPage = (req, res) => {
   res.render("signup");

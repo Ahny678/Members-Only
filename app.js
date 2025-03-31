@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var sequelize = require("./config/database");
 const messageModel = require("./models/message");
+require("dotenv").config();
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -15,11 +16,15 @@ var app = express();
 const { Pool } = require("pg");
 const pgPool = new Pool({
   host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
+  username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
 });
+// DB_NAME=MembersOnly
+// DB_USERNAME=tiffany
+// DB_PORT=5432
+// DB_DIALECT=postgres
 //-------------------------------------------------------------------------------------
 //SESSION CODE-----------------------
 const session = require("express-session");
@@ -34,8 +39,8 @@ app.use(
   session({
     secret: process.env.SECRET_KEY,
     resave: false,
-    store: sessionStore,
     saveUninitialized: true,
+    store: sessionStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },
@@ -51,8 +56,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-  console.log(req.user);
-  console.log(req.session);
+  console.log("CURRENT USER:", req.user);
+  //console.log("Session ID from cookie:", req.sessionID);
+  console.log("Session object:", req.session);
   next();
 });
 
@@ -92,7 +98,7 @@ app.use(function (err, req, res, next) {
   try {
     await sequelize.authenticate();
     sequelize
-      .sync({ force: true })
+      .sync({ alter: true })
       .then(() => console.log("> Database & tables created!"))
       .catch((err) => console.error("> Error syncing database:", err));
 
